@@ -41,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
                     MyDB db= new MyDB(MainActivity.this);
 
                     String name = et_NameOfCourse.getText().toString();
-                    if(name.length()==0)
+                    if(name.length()==0){
+                        Toast.makeText(MainActivity.this,"Enter a name for your course",Toast.LENGTH_SHORT).show();
                         return;
+                    }
 
                     CourseModel course= new CourseModel(name);
 
