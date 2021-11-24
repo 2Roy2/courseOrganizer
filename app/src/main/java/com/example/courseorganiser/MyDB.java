@@ -146,8 +146,8 @@ public class MyDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void updateParticipant(ParticipantModel participant,String courseName){
-        deleteOneParticipant(participant.getName(),courseName);
+    public void updateParticipant(ParticipantModel participant,String oldName,String courseName){
+        deleteOneParticipant(oldName,courseName);
         addOneParticipant(participant,courseName);
     }
 

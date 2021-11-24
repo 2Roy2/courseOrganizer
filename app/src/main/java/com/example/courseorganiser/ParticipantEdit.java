@@ -14,12 +14,14 @@ public class ParticipantEdit extends AppCompatActivity {
     String courseName=null;
     String participantName=null;
     boolean payed;
+    EditText et_participantName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_edit);
 
-        EditText et_participantName=(EditText) findViewById(R.id.et_participantName);
+        et_participantName=(EditText) findViewById(R.id.et_participantName);
         Switch sw_payed=(Switch) findViewById(R.id.sw_payed);
         Button btn_deleteParticipant=(Button) findViewById(R.id.btn_deleteParticipant);
         Button btn_updateParticipantData=(Button) findViewById(R.id.btn_updateParticipantData);
@@ -28,9 +30,13 @@ public class ParticipantEdit extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         if(intent.hasExtra("courseName"))
-            courseName =(String) bundle.get("name");
-        if(intent.hasExtra("participantName"))
+            courseName =(String) bundle.get("courseName");
+        if(intent.hasExtra("participantName")){
             participantName =(String) bundle.get("participantName");
+            showParticipantOnParticipantName();
+        }
+
+
 
 
 
@@ -48,8 +54,8 @@ public class ParticipantEdit extends AppCompatActivity {
                         db.deleteOneParticipant(participantName,courseName);
 
                         db.close();
-                        Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
-                        startActivity(intent);
+                        backToCourseDetails();
+
                     }
 
                 }
@@ -70,24 +76,36 @@ public class ParticipantEdit extends AppCompatActivity {
                     MyDB db= new MyDB(ParticipantEdit.this);
                     boolean isNewUser=(participantName==null);
 
-                    participantName=et_participantName.getText().toString();
+                    String participantNewName=et_participantName.getText().toString();
                     payed=sw_payed.getShowText();
 
-                    ParticipantModel participant= new ParticipantModel(participantName,payed);
+                    ParticipantModel participant= new ParticipantModel(participantNewName,payed);
+
+
+
 
                     if(isNewUser){
+                        if(db.checkForDuplicateParticipant(participant.getName(),courseName)){
+                            Toast.makeText(ParticipantEdit.this,"Participant already exists change the name",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         db.addOneParticipant(participant,courseName);
 
                         db.close();
-                        Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
-                        startActivity(intent);
+                        backToCourseDetails();
+
                     }
                     else{
-                        db.updateParticipant(participant,courseName);
+                        if(!participantNewName.equals(participantName)){
+                            if(db.checkForDuplicateParticipant(participant.getName(),courseName)){
+                                Toast.makeText(ParticipantEdit.this,"Participant already exists change the name",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        db.updateParticipant(participant,participantName,courseName);
 
                         db.close();
-                        Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
-                        startActivity(intent);
+                        backToCourseDetails();
                     }
 
                 }
@@ -98,6 +116,15 @@ public class ParticipantEdit extends AppCompatActivity {
             }
         });
 
+
+    }
+    public void backToCourseDetails(){
+        Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
+        intent.putExtra("courseName", courseName);
+        startActivity(intent);
+    }
+    public void showParticipantOnParticipantName(){
+        et_participantName.setText(participantName);
 
     }
 }

@@ -16,8 +16,8 @@
 
     <ListView
         android:id="@+id/lv_customers"
-        android:layout_width="418dp"
-        android:layout_height="414dp"
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,9 +40,17 @@
         android:id="@+id/btn_addParticipant"
         android:layout_width="144dp"
         android:layout_height="84dp"
+        android:text="Add participant"
+        app:layout_constraintBottom_toTopOf="@+id/lv_customers"
+        app:layout_constraintStart_toEndOf="@+id/tv_participants" />
+
+    <Button
+        android:id="@+id/btn_returnToAllCourses"
+        android:layout_width="157dp"
+        android:layout_height="99dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Add participant"
+        android:text="Return to courses"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

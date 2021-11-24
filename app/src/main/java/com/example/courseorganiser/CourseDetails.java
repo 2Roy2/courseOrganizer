@@ -15,9 +15,10 @@ import java.util.List;
 
 public class CourseDetails extends AppCompatActivity {
     private String courseName=null;
-    Button btn_deleteCourse;
-    ListView lv_customers;
-    Button btn_addParticipant;
+    private Button btn_deleteCourse;
+    private ListView lv_customers;
+    private Button btn_addParticipant;
+    private Button btn_returnToAllCourses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +27,18 @@ public class CourseDetails extends AppCompatActivity {
         btn_deleteCourse= (Button) findViewById(R.id.btn_deleteCourse);
         lv_customers =(ListView) findViewById(R.id.lv_customers);
         btn_addParticipant= (Button) findViewById(R.id.btn_addParticipant);
+        btn_returnToAllCourses = (Button) findViewById(R.id.btn_returnToAllCourses);
 
         MyDB db= new MyDB(CourseDetails.this);
-        showParticipantsOnLV(db.getParticipantNames(courseName));
         db.close();
 
         Intent intent= getIntent();
         Bundle bundle = intent.getExtras();
 
         if(bundle!=null)
-            courseName =(String) bundle.get("name");
+            courseName =(String) bundle.get("courseName");
+
+        showParticipantsOnLV(db.getParticipantNames(courseName));
 
         btn_deleteCourse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +82,14 @@ public class CourseDetails extends AppCompatActivity {
                     Toast.makeText(CourseDetails.this,"ERROR",Toast.LENGTH_SHORT).show();
 
                 }
+            }
+        });
+
+        btn_returnToAllCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CourseDetails.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
