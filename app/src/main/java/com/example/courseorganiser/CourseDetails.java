@@ -31,7 +31,7 @@ public class CourseDetails extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         MyDB db= new MyDB(CourseDetails.this);
-        showParticipantsOnLV(db.getParticipantNames());
+        showParticipantsOnLV(db.getParticipantNames(courseName));
         db.close();
 
         if(bundle!=null)
