@@ -66,12 +66,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    MyDB db= new MyDB(MainActivity.this);
 
                     String name= (String) parent.getItemAtPosition(position);
-                    db.deleteOne(name);
-
-                    db.close();
 
                     Intent intent = new Intent(MainActivity.this, CourseDetails.class);
                     intent.putExtra("courseName", name);

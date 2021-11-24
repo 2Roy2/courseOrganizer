@@ -146,11 +146,28 @@ public class MyDB extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void updateParticipant(ParticipantModel participant,String courseName){
+        deleteOneParticipant(participant.getName(),courseName);
+        addOneParticipant(participant,courseName);
+    }
+
     public boolean checkForDuplicateCourse(String name) {
         //needsToBeCheckd
         SQLiteDatabase db = this.getWritableDatabase();
 
         String queryString = "SELECT " + COL_NAME + " FROM " + TABLE_NAME + " WHERE " + COL_NAME + " = '" + name + "'";
+        Cursor c = db.rawQuery(queryString, null);
+
+        boolean duplicate = c.moveToFirst();
+
+        c.close();
+
+        return duplicate;
+    }
+    public boolean checkForDuplicateParticipant(String participantName,String courseName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String queryString = "SELECT " + COL_NAME + " FROM " + courseName+PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + participantName + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         boolean duplicate = c.moveToFirst();

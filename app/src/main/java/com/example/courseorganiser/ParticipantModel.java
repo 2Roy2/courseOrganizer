@@ -4,6 +4,11 @@ public class ParticipantModel {
     private String name;
     private boolean payed;
 
+    public ParticipantModel(String name, boolean payed) {
+        this.name = name;
+        this.payed = payed;
+    }
+
     public String getName() {
         return name;
     }
