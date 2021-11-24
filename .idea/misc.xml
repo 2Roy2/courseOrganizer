@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/layout/activity_add_new_course.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/layout/activity_course_details.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/layout/activity_participant_edit.xml" value="0.25" />
+        <entry key="..\:/Users/royar/AndroidStudioProjects/courseOrganiser/app/src/main/res/menu/popup_menu.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

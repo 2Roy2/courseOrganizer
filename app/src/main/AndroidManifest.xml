@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CourseOrganiser">
         <activity
+            android:name=".ParticipantEdit"
+            android:exported="false" />
+        <activity
+            android:name=".CourseDetails"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

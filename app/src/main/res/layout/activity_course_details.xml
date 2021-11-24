@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CourseDetails">
+
+    <Button
+        android:id="@+id/btn_deleteCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Course"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/lv_customers"
+        android:layout_width="418dp"
+        android:layout_height="414dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_deleteCourse"
+        app:layout_constraintVertical_bias="1.0">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tv_participants"
+        android:layout_width="212dp"
+        android:layout_height="39dp"
+        android:text="Participants:"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/lv_customers"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_addParticipant"
+        android:layout_width="144dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Add participant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

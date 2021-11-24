@@ -2,6 +2,7 @@ package com.example.courseorganiser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -70,9 +71,12 @@ public class MainActivity extends AppCompatActivity {
                     String name= (String) parent.getItemAtPosition(position);
                     db.deleteOne(name);
 
-                    showCoursesOnLV(db.getCoursesNames());
-
                     db.close();
+
+                    Intent intent = new Intent(MainActivity.this, CourseDetails.class);
+                    intent.putExtra("courseName", name);
+                    startActivity(intent);
+
                 }
                 catch (Exception e){
                     Toast.makeText(MainActivity.this,"ERROR",Toast.LENGTH_SHORT).show();
