@@ -51,7 +51,6 @@ public class CourseDetails extends AppCompatActivity {
                 catch (Exception e){
                     Toast.makeText(CourseDetails.this,"ERROR",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 

@@ -48,6 +48,8 @@ public class ParticipantEdit extends AppCompatActivity {
                         db.deleteOneParticipant(participantName,courseName);
 
                         db.close();
+                        Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
+                        startActivity(intent);
                     }
 
                 }
