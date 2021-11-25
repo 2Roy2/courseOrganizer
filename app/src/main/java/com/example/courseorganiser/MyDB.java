@@ -17,7 +17,8 @@ public class MyDB extends SQLiteOpenHelper {
     private static final String COL_NAME = "name";
     private static final String COL_ID = "id";
     private static final String COL_PAYED = "payed";
-    private static final String PARTICIPANTS_ENDING = "_participants";
+    private static final String PARTICIPANTS_ENDING = "_participants '";
+    private static final String BEFORE_PARTICIPANTS_TABLES="'";
 
     public MyDB(@Nullable Context context) {
         super(context, "courses.db", null, 1);
@@ -43,7 +44,7 @@ public class MyDB extends SQLiteOpenHelper {
 
         long in = db.insert(TABLE_NAME, null, cv);
 
-        String query = "CREATE TABLE " + course.getName() + PARTICIPANTS_ENDING + " ("
+        String query = "CREATE TABLE " + BEFORE_PARTICIPANTS_TABLES+course.getName() + PARTICIPANTS_ENDING + " ("
                 + COL_NAME + " TEXT,"
                 + COL_PAYED + " INTEGER)";
 
@@ -61,7 +62,7 @@ public class MyDB extends SQLiteOpenHelper {
         cv.put(COL_NAME, participant.getName());
         cv.put(COL_PAYED, participant.isPayed());
 
-        long in = db.insert(courseName + PARTICIPANTS_ENDING, null, cv);
+        long in = db.insert(BEFORE_PARTICIPANTS_TABLES+courseName + PARTICIPANTS_ENDING, null, cv);
 
         db.close();
         return in > 0;
@@ -71,7 +72,7 @@ public class MyDB extends SQLiteOpenHelper {
         //if two participants have two names its a problem
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String queryString = "DELETE FROM " + courseName + "_participants" + " WHERE " + COL_NAME + " = '" + participantName + "'";
+        String queryString = "DELETE FROM "+BEFORE_PARTICIPANTS_TABLES + courseName + PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + participantName + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         boolean deleted = c.moveToFirst();
@@ -89,7 +90,7 @@ public class MyDB extends SQLiteOpenHelper {
 
         c.close();
 
-        db.execSQL("DROP TABLE IF EXISTS " + name + PARTICIPANTS_ENDING);
+        db.execSQL("DROP TABLE IF EXISTS "+BEFORE_PARTICIPANTS_TABLES + name + PARTICIPANTS_ENDING);
 
         return deleted;
     }
@@ -117,7 +118,7 @@ public class MyDB extends SQLiteOpenHelper {
         List<String> names = new ArrayList<String>();
 
 
-        Cursor cursor = db.rawQuery("SELECT " + COL_NAME + " FROM " + courseName + PARTICIPANTS_ENDING, null);
+        Cursor cursor = db.rawQuery("SELECT " + COL_NAME + " FROM "+BEFORE_PARTICIPANTS_TABLES + courseName + PARTICIPANTS_ENDING, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -137,7 +138,7 @@ public class MyDB extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryString, null);
         if (c.moveToFirst()) {
             do {
-                db.execSQL("DROP TABLE IF EXISTS " + c.getString(0) + PARTICIPANTS_ENDING);
+                db.execSQL("DROP TABLE IF EXISTS " +BEFORE_PARTICIPANTS_TABLES+ c.getString(0) + PARTICIPANTS_ENDING);
             } while (c.moveToNext());
         }
 
@@ -168,7 +169,7 @@ public class MyDB extends SQLiteOpenHelper {
     public boolean checkForDuplicateParticipant(String participantName, String courseName) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String queryString = "SELECT " + COL_NAME + " FROM " + courseName + PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + participantName + "'";
+        String queryString = "SELECT " + COL_NAME + " FROM " + BEFORE_PARTICIPANTS_TABLES+courseName + PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + participantName + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         boolean duplicate = c.moveToFirst();
@@ -182,7 +183,7 @@ public class MyDB extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryString = "SELECT " + COL_PAYED + " FROM " + courseName + PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + name + "'";
+        String queryString = "SELECT " + COL_PAYED + " FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName + PARTICIPANTS_ENDING + " WHERE " + COL_NAME + " = '" + name + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         c.moveToFirst();
@@ -197,7 +198,7 @@ public class MyDB extends SQLiteOpenHelper {
     public int getHowMuchParticipantsPayed(String courseName){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryString = "SELECT COUNT(*) FROM " + courseName+ PARTICIPANTS_ENDING+" WHERE " + COL_PAYED + " = '" + 1 + "'";
+        String queryString = "SELECT COUNT(*) FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName+ PARTICIPANTS_ENDING+" WHERE " + COL_PAYED + " = '" + 1 + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         c.moveToFirst();
@@ -212,7 +213,7 @@ public class MyDB extends SQLiteOpenHelper {
     public int getHowMuchParticipantsDidntPayed(String courseName){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryString = "SELECT COUNT(*) FROM " + courseName+ PARTICIPANTS_ENDING+" WHERE " + COL_PAYED + " = '" + 0 + "'";
+        String queryString = "SELECT COUNT(*) FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName+ PARTICIPANTS_ENDING+" WHERE " + COL_PAYED + " = '" + 0 + "'";
         Cursor c = db.rawQuery(queryString, null);
 
         c.moveToFirst();
@@ -228,7 +229,7 @@ public class MyDB extends SQLiteOpenHelper {
     public int getHowMuchParticipantsInCourse(String courseName){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryString = "SELECT COUNT(*) FROM " + courseName+ PARTICIPANTS_ENDING;
+        String queryString = "SELECT COUNT(*) FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName+ PARTICIPANTS_ENDING;
         Cursor c = db.rawQuery(queryString, null);
 
         c.moveToFirst();
@@ -249,7 +250,7 @@ public class MyDB extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(queryString, null);
         if (c.moveToFirst()) {
             do {
-                db.execSQL("DROP TABLE IF EXISTS " + c.getString(0) + PARTICIPANTS_ENDING);
+                db.execSQL("DROP TABLE IF EXISTS " +BEFORE_PARTICIPANTS_TABLES+ c.getString(0) + PARTICIPANTS_ENDING);
             } while (c.moveToNext());
         }
 
