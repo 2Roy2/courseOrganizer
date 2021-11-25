@@ -35,6 +35,9 @@ public class ParticipantEdit extends AppCompatActivity {
             participantName =(String) bundle.get("participantName");
             showParticipantOnParticipantName();
         }
+        if(intent.hasExtra("isPayed"))
+            sw_payed.setChecked((boolean)(bundle.get("isPayed")));
+
 
 
 
@@ -77,11 +80,9 @@ public class ParticipantEdit extends AppCompatActivity {
                     boolean isNewUser=(participantName==null);
 
                     String participantNewName=et_participantName.getText().toString();
-                    payed=sw_payed.getShowText();
+                    payed=sw_payed.isChecked();
 
                     ParticipantModel participant= new ParticipantModel(participantNewName,payed);
-
-
 
 
                     if(isNewUser){
@@ -116,8 +117,8 @@ public class ParticipantEdit extends AppCompatActivity {
             }
         });
 
-
     }
+
     public void backToCourseDetails(){
         Intent intent = new Intent(ParticipantEdit.this, CourseDetails.class);
         intent.putExtra("courseName", courseName);

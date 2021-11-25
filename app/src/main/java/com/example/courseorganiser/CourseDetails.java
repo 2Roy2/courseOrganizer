@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public class CourseDetails extends AppCompatActivity {
     private ListView lv_customers;
     private Button btn_addParticipant;
     private Button btn_returnToAllCourses;
+    private TextView tv_numOfParticipantsDidntPay;
+    private TextView tv_numOfParticipantsPayed;
+    private TextView tv_participants;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,9 @@ public class CourseDetails extends AppCompatActivity {
         lv_customers =(ListView) findViewById(R.id.lv_customers);
         btn_addParticipant= (Button) findViewById(R.id.btn_addParticipant);
         btn_returnToAllCourses = (Button) findViewById(R.id.btn_returnToAllCourses);
+        tv_numOfParticipantsDidntPay = (TextView) findViewById(R.id.tv_numOfParticipantsDidntPay);
+        tv_numOfParticipantsPayed = (TextView) findViewById(R.id.tv_numOfParticipantsPayed);
+        tv_participants=(TextView) findViewById(R.id.tv_participants);
 
         MyDB db= new MyDB(CourseDetails.this);
         db.close();
@@ -38,7 +46,7 @@ public class CourseDetails extends AppCompatActivity {
         if(bundle!=null)
             courseName =(String) bundle.get("courseName");
 
-        showParticipantsOnLV(db.getParticipantNames(courseName));
+        showDataOnActivity();
 
         btn_deleteCourse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,11 +79,13 @@ public class CourseDetails extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
+                    MyDB db= new MyDB(CourseDetails.this);
                     String participantName= (String) parent.getItemAtPosition(position);
 
                     Intent intent = new Intent(CourseDetails.this, ParticipantEdit.class);
                     intent.putExtra("courseName", courseName);
                     intent.putExtra("participantName",participantName);
+                    intent.putExtra("isPayed",db.getParticipantIsPayed(participantName,courseName));
                     startActivity(intent);
                 }
                 catch (Exception e){
@@ -98,6 +108,14 @@ public class CourseDetails extends AppCompatActivity {
         ArrayAdapter namesArrayAdapter=new ArrayAdapter<String>(CourseDetails.this, android.R.layout.simple_dropdown_item_1line,names);
         lv_customers.setAdapter(namesArrayAdapter);
 
+    }
+    public void showDataOnActivity(){
+        MyDB db= new MyDB(CourseDetails.this);
+        showParticipantsOnLV(db.getParticipantNamesAadIfTheyPaid(courseName));
+        tv_numOfParticipantsPayed.setText("Payed: "+ db.getHowMuchParticipantsPayed(courseName));
+        tv_numOfParticipantsDidntPay.setText("Didn't Pay: "+db.getHowMuchParticipantsDidntPayed(courseName));
+        tv_participants.setText("Participants: "+db.getHowMuchParticipantsInCourse(courseName));
+        db.close();
     }
 
 }

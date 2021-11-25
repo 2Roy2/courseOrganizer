@@ -54,4 +54,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_numOfParticipantsPayed"
+        android:layout_width="143dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_participants"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_numOfParticipantsDidntPay"
+        android:layout_width="143dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_numOfParticipantsPayed"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
