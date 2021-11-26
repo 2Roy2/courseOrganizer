@@ -18,9 +18,9 @@ public class CourseDetails extends AppCompatActivity {
     private String courseName=null;
     private Button btn_deleteCourse;
     private ListView lv_customers;
-    private ListView lv_isPayed;
     private Button btn_addParticipant;
     private Button btn_returnToAllCourses;
+    private Button btn_saveCourseAsFile;
     private TextView tv_numOfParticipantsDidntPay;
     private TextView tv_numOfParticipantsPayed;
     private TextView tv_participants;
@@ -32,9 +32,9 @@ public class CourseDetails extends AppCompatActivity {
 
         btn_deleteCourse= (Button) findViewById(R.id.btn_deleteCourse);
         lv_customers =(ListView) findViewById(R.id.lv_customers);
-        lv_isPayed=(ListView) findViewById(R.id.lv_isPayed);
         btn_addParticipant= (Button) findViewById(R.id.btn_addParticipant);
         btn_returnToAllCourses = (Button) findViewById(R.id.btn_returnToAllCourses);
+        btn_saveCourseAsFile=(Button) findViewById(R.id.btn_saveCourseAsFile);
         tv_numOfParticipantsDidntPay = (TextView) findViewById(R.id.tv_numOfParticipantsDidntPay);
         tv_numOfParticipantsPayed = (TextView) findViewById(R.id.tv_numOfParticipantsPayed);
         tv_participants=(TextView) findViewById(R.id.tv_participants);
@@ -104,6 +104,18 @@ public class CourseDetails extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btn_saveCourseAsFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyDB db= new MyDB(CourseDetails.this);
+                if(db.downloadCourseDetails(courseName))
+                    Toast.makeText(CourseDetails.this,"Saved",Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(CourseDetails.this,"ERROR, try again",Toast.LENGTH_SHORT).show();
+
+                db.close();
+            }
+        });
 
     }
     public void showParticipantsOnLV(List<String> names){
@@ -111,15 +123,11 @@ public class CourseDetails extends AppCompatActivity {
         lv_customers.setAdapter(namesArrayAdapter);
 
     }
-    public void showIfParticipantPayedOnLV(List<String> names){
-        ArrayAdapter payedArrayAdapter=new ArrayAdapter<String>(CourseDetails.this, android.R.layout.simple_dropdown_item_1line,names);
-        lv_isPayed.setAdapter(payedArrayAdapter);
-    }
+
     public void showDataOnActivity(){
         MyDB db= new MyDB(CourseDetails.this);
 
         showParticipantsOnLV(db.getParticipantNames(courseName));
-        showIfParticipantPayedOnLV(db.getParticipantsIsPayed(courseName));
 
         tv_numOfParticipantsPayed.setText("Payed: "+ db.getHowMuchParticipantsPayed(courseName));
         tv_numOfParticipantsDidntPay.setText("Didn't Pay: "+db.getHowMuchParticipantsDidntPayed(courseName));

@@ -18,11 +18,11 @@
 
     <ListView
         android:id="@+id/lv_customers"
-        android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_width="wrap_content"
+        android:layout_height="348dp"
         android:background="#1400BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/lv_isPayed"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
     </ListView>
@@ -40,10 +40,9 @@
         android:id="@+id/btn_addParticipant"
         android:layout_width="144dp"
         android:layout_height="68dp"
-        android:layout_marginBottom="4dp"
         android:background="#8BC34A"
         android:text="Add participant"
-        app:layout_constraintBottom_toTopOf="@+id/lv_isPayed"
+        app:layout_constraintBottom_toTopOf="@+id/lv_customers"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -69,13 +68,14 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_numOfParticipantsPayed"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ListView
-        android:id="@+id/lv_isPayed"
-        android:layout_width="137dp"
-        android:layout_height="350dp"
-        android:background="#1400BCD4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/lv_customers" />
+    <Button
+        android:id="@+id/btn_saveCourseAsFile"
+        android:layout_width="121dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="32dp"
+        android:background="#9C27B0"
+        android:text="download Course"
+        app:layout_constraintBottom_toTopOf="@+id/btn_addParticipant"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

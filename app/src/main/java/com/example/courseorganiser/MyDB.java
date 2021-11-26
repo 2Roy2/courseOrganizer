@@ -5,9 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,26 +116,7 @@ public class MyDB extends SQLiteOpenHelper {
 
         return names;
     }
-    public List<String> getParticipantsIsPayed(String courseName){
-        SQLiteDatabase db = this.getReadableDatabase();
-        List<String> payed = new ArrayList<String>();
 
-        Cursor cursor = db.rawQuery("SELECT " + COL_PAYED + " FROM "+BEFORE_PARTICIPANTS_TABLES + courseName + PARTICIPANTS_ENDING, null);
-        if (cursor.moveToFirst()) {
-            do {
-                String add;
-                if(cursor.getInt(0)==1)
-                    add="Payed";
-                else
-                    add="";
-                payed.add(add);
-            } while (cursor.moveToNext());
-        }
-
-
-        db.close();
-        return payed;
-    }
 
     public List<String> getParticipantNames(String courseName) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -261,6 +246,45 @@ public class MyDB extends SQLiteOpenHelper {
 
         return howMuchParticipantsInCourse;
     }
+
+    public boolean downloadCourseDetails(String courseName){
+        if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            return false;
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryString = "SELECT * FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName+ PARTICIPANTS_ENDING;
+        Cursor c = db.rawQuery(queryString, null);
+
+
+        String fileName=courseName+".txt";
+        File file = new File (Environment.getExternalStorageDirectory(), fileName);
+        try {
+            FileOutputStream fileOutputStream=new FileOutputStream(file);
+            String data=courseName+"/n";
+            fileOutputStream.write(data.getBytes());
+            if (c.moveToFirst()){
+             do {
+                 data=c.getString(0)+String.valueOf(c.getInt(1))+"/n";
+                 fileOutputStream.write(data.getBytes());
+             }while (c.moveToNext());
+
+             fileOutputStream.close();
+            }
+
+        }
+        catch (Exception e){
+            return false;
+        }
+
+
+        c.close();
+        db.close();
+        return true;
+    }
+
+
 
 
     public void deleteAllTables() {
