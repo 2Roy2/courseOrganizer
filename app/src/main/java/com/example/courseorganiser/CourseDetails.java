@@ -18,6 +18,7 @@ public class CourseDetails extends AppCompatActivity {
     private String courseName=null;
     private Button btn_deleteCourse;
     private ListView lv_customers;
+    private ListView lv_isPayed;
     private Button btn_addParticipant;
     private Button btn_returnToAllCourses;
     private TextView tv_numOfParticipantsDidntPay;
@@ -31,6 +32,7 @@ public class CourseDetails extends AppCompatActivity {
 
         btn_deleteCourse= (Button) findViewById(R.id.btn_deleteCourse);
         lv_customers =(ListView) findViewById(R.id.lv_customers);
+        lv_isPayed=(ListView) findViewById(R.id.lv_isPayed);
         btn_addParticipant= (Button) findViewById(R.id.btn_addParticipant);
         btn_returnToAllCourses = (Button) findViewById(R.id.btn_returnToAllCourses);
         tv_numOfParticipantsDidntPay = (TextView) findViewById(R.id.tv_numOfParticipantsDidntPay);
@@ -109,12 +111,20 @@ public class CourseDetails extends AppCompatActivity {
         lv_customers.setAdapter(namesArrayAdapter);
 
     }
+    public void showIfParticipantPayedOnLV(List<String> names){
+        ArrayAdapter payedArrayAdapter=new ArrayAdapter<String>(CourseDetails.this, android.R.layout.simple_dropdown_item_1line,names);
+        lv_isPayed.setAdapter(payedArrayAdapter);
+    }
     public void showDataOnActivity(){
         MyDB db= new MyDB(CourseDetails.this);
-        showParticipantsOnLV(db.getParticipantNamesAadIfTheyPaid(courseName));
+
+        showParticipantsOnLV(db.getParticipantNames(courseName));
+        showIfParticipantPayedOnLV(db.getParticipantsIsPayed(courseName));
+
         tv_numOfParticipantsPayed.setText("Payed: "+ db.getHowMuchParticipantsPayed(courseName));
         tv_numOfParticipantsDidntPay.setText("Didn't Pay: "+db.getHowMuchParticipantsDidntPayed(courseName));
         tv_participants.setText("Participants: "+db.getHowMuchParticipantsInCourse(courseName));
+
         db.close();
     }
 

@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     showCoursesOnLV(db.getCoursesNames());
 
                     db.close();
+                    et_NameOfCourse.setText("");
                 }
                 catch (Exception e){
                     Toast.makeText(MainActivity.this,"ERROR",Toast.LENGTH_SHORT).show();

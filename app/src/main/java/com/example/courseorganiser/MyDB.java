@@ -112,8 +112,28 @@ public class MyDB extends SQLiteOpenHelper {
 
         return names;
     }
+    public List<String> getParticipantsIsPayed(String courseName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> payed = new ArrayList<String>();
 
-    public List<String> getParticipantNamesAadIfTheyPaid(String courseName) {
+        Cursor cursor = db.rawQuery("SELECT " + COL_PAYED + " FROM "+BEFORE_PARTICIPANTS_TABLES + courseName + PARTICIPANTS_ENDING, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String add;
+                if(cursor.getInt(0)==1)
+                    add="Payed";
+                else
+                    add="";
+                payed.add(add);
+            } while (cursor.moveToNext());
+        }
+
+
+        db.close();
+        return payed;
+    }
+
+    public List<String> getParticipantNames(String courseName) {
         SQLiteDatabase db = this.getReadableDatabase();
         List<String> names = new ArrayList<String>();
 
