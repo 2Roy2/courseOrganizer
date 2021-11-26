@@ -4,27 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3600BCD4"
     tools:context=".CourseDetails">
 
     <Button
         android:id="@+id/btn_deleteCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="113dp"
+        android:layout_height="50dp"
+        android:background="#E91E63"
         android:text="Delete Course"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/lv_customers"
-        android:layout_width="266dp"
+        android:layout_width="0dp"
         android:layout_height="350dp"
-        android:layout_marginTop="32dp"
+        android:background="#1400BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_deleteCourse"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintEnd_toStartOf="@+id/lv_isPayed"
+        app:layout_constraintStart_toStartOf="parent">
 
     </ListView>
 
@@ -40,17 +39,18 @@
     <Button
         android:id="@+id/btn_addParticipant"
         android:layout_width="144dp"
-        android:layout_height="84dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="4dp"
+        android:background="#8BC34A"
         android:text="Add participant"
-        app:layout_constraintBottom_toTopOf="@+id/lv_customers"
-        app:layout_constraintStart_toEndOf="@+id/tv_participants" />
+        app:layout_constraintBottom_toTopOf="@+id/lv_isPayed"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btn_returnToAllCourses"
-        android:layout_width="157dp"
-        android:layout_height="99dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="161dp"
+        android:layout_height="62dp"
+        android:background="#009688"
         android:text="Return to courses"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,9 +73,9 @@
         android:id="@+id/lv_isPayed"
         android:layout_width="137dp"
         android:layout_height="350dp"
+        android:background="#1400BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lv_customers"
         app:layout_constraintTop_toTopOf="@+id/lv_customers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

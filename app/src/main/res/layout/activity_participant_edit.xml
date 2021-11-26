@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3600BCD4"
     tools:context=".ParticipantEdit">
 
     <EditText
@@ -24,6 +25,7 @@
         android:layout_width="128dp"
         android:layout_height="61dp"
         android:layout_marginBottom="16dp"
+        android:background="#E91E63"
         android:text="Delete"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +37,7 @@
         android:layout_width="144dp"
         android:layout_height="89dp"
         android:layout_marginTop="96dp"
+        android:background="#8BC34A"
         android:text="Update"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +50,7 @@
         android:layout_height="70dp"
         android:text="payed"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_participantName"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintTop_toTopOf="@+id/et_participantName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
