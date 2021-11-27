@@ -82,11 +82,12 @@ public class CourseDetails extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     MyDB db= new MyDB(CourseDetails.this);
-                    String participantName= (String) parent.getItemAtPosition(position);
+                    ParticipantModel participant= (ParticipantModel) parent.getItemAtPosition(position);
+                    String participantName=participant.getName();
 
                     Intent intent = new Intent(CourseDetails.this, ParticipantEdit.class);
                     intent.putExtra("courseName", courseName);
-                    intent.putExtra("participantName",participantName);
+                    intent.putExtra("participantName", participantName);
                     intent.putExtra("isPayed",db.getParticipantIsPayed(participantName,courseName));
                     startActivity(intent);
                 }
@@ -118,16 +119,16 @@ public class CourseDetails extends AppCompatActivity {
         });
 
     }
-    public void showParticipantsOnLV(List<String> names){
-        ArrayAdapter namesArrayAdapter=new ArrayAdapter<String>(CourseDetails.this, android.R.layout.simple_dropdown_item_1line,names);
-        lv_customers.setAdapter(namesArrayAdapter);
+    public void showParticipantsOnLV(List<ParticipantModel> participants){
+        ParticipantAdapter adapter= new ParticipantAdapter(this,R.layout.adapter_list_view_for_course_details,participants);
+        lv_customers.setAdapter(adapter);
 
     }
 
     public void showDataOnActivity(){
         MyDB db= new MyDB(CourseDetails.this);
 
-        showParticipantsOnLV(db.getParticipantNames(courseName));
+        showParticipantsOnLV(db.getParticipantModelListOfCourse(courseName));
 
         tv_numOfParticipantsPayed.setText("Payed: "+ db.getHowMuchParticipantsPayed(courseName));
         tv_numOfParticipantsDidntPay.setText("Didn't Pay: "+db.getHowMuchParticipantsDidntPayed(courseName));

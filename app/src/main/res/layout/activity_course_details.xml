@@ -18,7 +18,7 @@
 
     <ListView
         android:id="@+id/lv_customers"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="348dp"
         android:background="#1400BCD4"
         app:layout_constraintBottom_toBottomOf="parent"

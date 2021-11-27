@@ -116,7 +116,24 @@ public class MyDB extends SQLiteOpenHelper {
 
         return names;
     }
+    public List<Boolean> getParticipantsIsPayed(String courseName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Boolean> payed = new ArrayList<Boolean>();
 
+        Cursor cursor = db.rawQuery("SELECT " + COL_PAYED + " FROM "+BEFORE_PARTICIPANTS_TABLES + courseName + PARTICIPANTS_ENDING, null);
+        if (cursor.moveToFirst()) {
+            do {
+                if(cursor.getInt(0)==1)
+                    payed.add(true);
+                else
+                    payed.add(false);
+            } while (cursor.moveToNext());
+        }
+
+
+        db.close();
+        return payed;
+    }
 
     public List<String> getParticipantNames(String courseName) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -135,6 +152,17 @@ public class MyDB extends SQLiteOpenHelper {
         cursor.close();
 
         return names;
+    }
+    public List<ParticipantModel> getParticipantModelListOfCourse(String courseName){
+        List<String> names= getParticipantNames(courseName);
+        List<Boolean> payed= getParticipantsIsPayed(courseName);
+        List<ParticipantModel> participants=new ArrayList<ParticipantModel>();
+        for(int i =0;i<names.size();i++){
+            ParticipantModel participant=new ParticipantModel(names.get(i),payed.get(i));
+            participants.add(participant);
+        }
+        return participants;
+
     }
 
     @Override
