@@ -285,19 +285,22 @@ public class MyDB extends SQLiteOpenHelper {
         String queryString = "SELECT * FROM " +BEFORE_PARTICIPANTS_TABLES+ courseName+ PARTICIPANTS_ENDING;
         Cursor c = db.rawQuery(queryString, null);
 
-
         String fileName=courseName+".txt";
-        File file = new File (Environment.getExternalStorageDirectory(), fileName);
+
+        File file = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+
         try {
             FileOutputStream fileOutputStream=new FileOutputStream(file);
-            String data=courseName+"/n";
+            String data=courseName+"\r\n";
             fileOutputStream.write(data.getBytes());
             if (c.moveToFirst()){
              do {
-                 data=c.getString(0)+String.valueOf(c.getInt(1))+"/n";
+                 String isPayedTXT="payed";
+                 if(c.getInt(1)==0)
+                     isPayedTXT="didn't pay";
+                 data=c.getString(0)+" "+isPayedTXT+"\r\n";
                  fileOutputStream.write(data.getBytes());
              }while (c.moveToNext());
-
              fileOutputStream.close();
             }
 

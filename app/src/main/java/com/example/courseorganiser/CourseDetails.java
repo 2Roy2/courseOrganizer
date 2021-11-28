@@ -3,7 +3,9 @@ package com.example.courseorganiser;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.net.URLConnection;
 import java.util.List;
 
 public class CourseDetails extends AppCompatActivity {
@@ -109,8 +113,10 @@ public class CourseDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MyDB db= new MyDB(CourseDetails.this);
-                if(db.downloadCourseDetails(courseName))
-                    Toast.makeText(CourseDetails.this,"Saved",Toast.LENGTH_SHORT).show();
+                if(db.downloadCourseDetails(courseName)){
+                    Toast.makeText(CourseDetails.this,"saved, go to downloads to view it",Toast.LENGTH_SHORT).show();
+                }
+
                 else
                     Toast.makeText(CourseDetails.this,"ERROR, try again",Toast.LENGTH_SHORT).show();
 
@@ -122,6 +128,20 @@ public class CourseDetails extends AppCompatActivity {
     public void showParticipantsOnLV(List<ParticipantModel> participants){
         ParticipantAdapter adapter= new ParticipantAdapter(this,R.layout.adapter_list_view_for_course_details,participants);
         lv_customers.setAdapter(adapter);
+
+    }
+    private void shareFile(File file) {
+
+        Intent intentShareFile = new Intent(Intent.ACTION_SEND);
+
+        intentShareFile.setAction(Intent.ACTION_SEND);
+        intentShareFile.setType("text/*");
+        intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                Uri.parse("content://"+file.getAbsolutePath()));
+        intentShareFile.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+
+        startActivity(Intent.createChooser(intentShareFile, "share file with"));
 
     }
 
