@@ -1,6 +1,6 @@
 # courseOrganizer
 
-App that help you organize your courses
+An app that help you organize your courses
 
 Functionality:
   1. add update and delete courses
