@@ -1,5 +1,4 @@
 # courseOrganizer
-
 An app that help you organize your courses
 
 Functionality:
